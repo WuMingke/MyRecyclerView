@@ -1,0 +1,24 @@
+public fun <T> MutableSharedFlow(
+    replay: Int = 0,
+    extraBufferCapacity: Int = 0,
+    onBufferOverflow: BufferOverflow = BufferOverflow.SUSPEND
+)
+
+replay 参数：replay 不能为负数，默认值为 0 表示 Subscriber 只能接收到 subscribe 之后 emit 的数据
+当 replay = n （ n > 0）时，SharedFlow 会启用缓存，此时 BufferSize 为 n，意味着可以缓存发射过的最近 n 个数据，并发送给新增的 Subscriber。
+
+extraBufferCapacity参数：额外追加的缓存，有助于提升 Emitter 的吞吐量
+若 replay = n， extraBufferCapacity = m，则 BufferSize = m + n。
+
+缓存
+    onBufferOverflow 参数
+        SUSPEND 挂起
+        DROP_LATEST 丢弃最新
+        DROP_OLDEST 丢弃最老
+
+SharedFlowImpl 里定义了缓存的结构
+    Buffer 是一个线性数据结构（就是一个普通的数组 Array<Any?>）
+
+    基于数组实现，当数组空间不够时进行 2n 的扩容
+    元素进入数组后的位置保持不变，通过移动指针，决定数据的消费起点
+    指针移动到数组尾部后，会重新指向头部，数组空间可循环使用
