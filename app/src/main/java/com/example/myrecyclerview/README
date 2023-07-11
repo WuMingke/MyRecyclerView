@@ -33,4 +33,33 @@ Recycler类可以简单理解为一个回收管理站，需要View时就向它�
 再为动画后的表项执行一次post-layout，同样形成一张布局快照（1、3）。
 比对两张快照中表项 3 的位置，就知道它该如何做动画了。
 
+缓存：
+    scrap
+    scrap仅仅在layout期间不为空。当LayoutManager开始 layout 的时候（pre-layout 或 post-layout），会将所有的viewHolder都放到scrap中。然后一个个再取回来，除非有些view发生了变化。
+
+
+如果在所有缓存中都没有找到 viewHolder，那就会调用 create 和 bind 方法。
+如果在 pool （RecycledViewPool ） 中找到了，那么会调用 bind 方法。
+如果在 cache （mCachedViews）中找到了，啥都不用做，直接显示就好了。
+
+notifyDataSetChanged 与 notifyItemRangeChanged 的区别？
+   notifyDataSetChanged 会调用 onCreateViewHolder() 和 onBindViewHolder()
+   notifyItemRangeChanged 会调用 onBindViewHolder()
+
+RecyclerView 与 ListView 缓存的区别？
+
+如何对一个列表进行性能优化？调用 notifyDataSetChanged 时闪烁的原因？
+    原因：是由于整个数据集刷新导致的，所有的列表项都会重新绑定数据和重新绘制
+
+如何理解adapter订阅者模式？
+当数据变更时，调用notify**方法时，Adapter内部的被观察者会遍历通知已经注册的观察者的对应方法，这时界面就会响应变更。
+
+RecyclerView性能优化本质是什么？
+要减少onCreateViewHolder和onBindViewHolder这两个函数的调用时间和调用的次数
+
+RecyclerView滑动冲突?   RecyclerView嵌套RecyclerView，RecyclerView嵌套ScrollView
+
+
+
+
 
