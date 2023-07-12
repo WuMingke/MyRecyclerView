@@ -24,6 +24,11 @@ class CoroutineActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_coroutine_activity)
 
+        val sum = { a: Int, b: Int ->
+            a + b
+        }
+
+        sum(1, 2)
 
         runBlocking {
             val isSuccess = copyFileTo(File(""), File(""))
