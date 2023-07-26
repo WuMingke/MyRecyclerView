@@ -33,6 +33,12 @@
         <activity
             android:name="com.example.jetpack.FlowActivity"
             android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name="com.example.nested.NestedActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
