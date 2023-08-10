@@ -5,10 +5,14 @@ class DataUtils {
         const val TAG = "wmkwmk"
         fun getData(): List<Int> {
             return arrayListOf<Int>().apply {
-                repeat(10) {
+                repeat(20) {
                     add(it)
                 }
             }
+        }
+
+        fun getStringData(): List<String> {
+            return getData().map { "$it" }
         }
 
         fun getNewData(): List<Int> {

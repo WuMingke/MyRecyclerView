@@ -39,6 +39,12 @@
         <activity
             android:name="com.example.nested.NestedActivity"
             android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".CustomDActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
